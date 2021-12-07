@@ -48,6 +48,8 @@ export default function NavBar() {
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
+      console.log("anchor", anchor);
+      console.log("open", open);
       if (
         event &&
         event.type === "keydown" &&
@@ -123,7 +125,12 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton
+          size="large"
+          aria-label="show 4 new mails"
+          color="inherit"
+          onClick={toggleDrawer("bottom", true)}
+        >
           <Badge badgeContent={4} color="error">
             <MailIcon />
           </Badge>
@@ -135,6 +142,7 @@ export default function NavBar() {
           size="large"
           aria-label="show 17 new notifications"
           color="inherit"
+          onClick={toggleDrawer("right", true)}
         >
           <Badge badgeContent={17} color="error">
             <NotificationsIcon />
@@ -165,18 +173,42 @@ export default function NavBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {routes.map((item, index) => (
-          <ListItem button key={index}>
+        {anchor.toString() === "left" ? (
+          routes.map((item, index) => (
+            <ListItem button key={index}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText>
+                <Link className="dark-link" to={item.route}>
+                  {item.name.toUpperCase()}
+                </Link>
+              </ListItemText>
+            </ListItem>
+          ))
+        ) : anchor.toString() === "right" ? (
+          <ListItem button>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <MailIcon />
             </ListItemIcon>
             <ListItemText>
-              <Link className="dark-link" to={item.route}>
-                {item.name.toUpperCase()}
+              <Link className="dark-link" to="/">
+                Notifications Right
               </Link>
             </ListItemText>
           </ListItem>
-        ))}
+        ) : (
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText>
+              <Link className="dark-link" to="/">
+                Messages
+              </Link>
+            </ListItemText>
+          </ListItem>
+        )}
       </List>
       <Divider />
     </Box>
@@ -221,6 +253,7 @@ export default function NavBar() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={toggleDrawer("bottom", true)}
             >
               <Badge badgeContent={4} color="error">
                 <MailIcon />
@@ -230,6 +263,7 @@ export default function NavBar() {
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              onClick={toggleDrawer("right", true)}
             >
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
@@ -270,7 +304,7 @@ export default function NavBar() {
           onClose={toggleDrawer(anchor, false)}
           onOpen={toggleDrawer(anchor, true)}
         >
-          {list("left")}
+          {list(anchor)}
         </SwipeableDrawer>
       </div>
     </Box>

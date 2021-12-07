@@ -13,11 +13,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 interface INotificationProps {
   message: string;
-  severity: string;
+  severity: boolean;
+  open: boolean;
 }
 
-export default function Notification(props: INotificationProps) {
-  const [open, setOpen] = React.useState(false);
+export default function SnackbarNotification(props: INotificationProps) {
+  const [open, setOpen] = React.useState(props.open);
 
   const handleClick = () => {
     setOpen(true);
@@ -37,11 +38,14 @@ export default function Notification(props: INotificationProps) {
         Open success snackbar
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+        <Alert
+          onClose={handleClose}
+          severity={props.severity ? "success" : "error"}
+          sx={{ width: "100%" }}
+        >
           This is a success message!
         </Alert>
       </Snackbar>
-      <Alert severity={props.severity}>{props.message}</Alert>
     </Stack>
   );
 }
