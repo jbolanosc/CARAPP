@@ -51,32 +51,11 @@ jobs:
       - name: Build
         run: npm run build
         
-  Test:
-    # The type of runner that the job will run on
-    runs-on: self-hosted
-    
-    strategy:
-      matrix:
-        node-version: [14.x]
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+        
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Test
         run: npm run test
         
-        
-  Deploy:
-     # The type of runner that the job will run on
-    runs-on: self-hosted
-    
-    strategy:
-      matrix:
-        node-version: [14.x]
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
       - name : Deploy to GithubPages
         run: |
           git config --global user.name $user_name
@@ -88,4 +67,8 @@ jobs:
           user_email: 'github-actions[bot]@users.noreply.github.com'
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
           repository: ${{ github.repository }}
+        
+        
+
+
 
