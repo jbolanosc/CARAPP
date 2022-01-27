@@ -75,7 +75,7 @@ export default function RegisterForm(props: any) {
         helperText={formik.touched.password && formik.errors.password}
         sx={{ margin: "2%" }}
       />
-      <Button color="primary" variant="contained" fullWidth type="submit">
+      <Button color="primary" variant="contained" type="submit">
         Submit
       </Button>
     </form>

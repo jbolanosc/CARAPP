@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import TextField from "@mui/material/TextField";
@@ -27,7 +27,7 @@ export default function LoginForm(props: any) {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit}> 
       <TextField
         fullWidth
         id="email"
@@ -53,7 +53,7 @@ export default function LoginForm(props: any) {
         helperText={formik.touched.password && formik.errors.password}
         sx={{ margin: "2%" }}
       />
-      <Button color="primary" variant="contained" fullWidth type="submit">
+      <Button color="primary" variant="contained" type="submit">
         Submit
       </Button>
     </form>
